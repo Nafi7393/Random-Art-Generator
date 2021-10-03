@@ -37,12 +37,12 @@ with st.sidebar.form(key="Image Details"):
 
     background_clr_choice = st.radio(label="Set Background Color", options=('Random', 'Pick One'))
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
-    background_clr = st.color_picker(label="Only if you choose 'Pick One' from above")
+    background_clr = st.color_picker(label="Only if you choose 'Pick One' from above".upper())
     st.markdown("---")
 
     line_clr_choice = st.radio(label="Set Line Color", options=('Random', 'Pick One'))
     st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-    st.write('<p style="font-size: 13.5px;">Only if you choose "Pick One" from above</p>', unsafe_allow_html=True)
+    st.write('<p style="font-size: 13.5px;">Only if you choose "Pick One" from above</p>'.upper(), unsafe_allow_html=True)
     start_clr = hex_to_rgb(st.color_picker(label="Line Start Color"))
     end_clr = hex_to_rgb(st.color_picker(label="Line End Color"))
     st.markdown("---")
