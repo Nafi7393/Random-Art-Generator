@@ -4,6 +4,11 @@ from itertools import cycle
 import random
 
 st.set_page_config(page_title="Random Art Generator")
+hide_menu = """
+<style>#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>"""
+st.markdown(hide_menu, unsafe_allow_html=True)
 
 
 def rand_clr():
