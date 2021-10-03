@@ -48,7 +48,6 @@ with st.sidebar.form(key="Image Details"):
 
 images = []
 cols = cycle(st.columns(2))
-st.write(cols)
 
 if img_option == option[0]:
     horizontal = True
