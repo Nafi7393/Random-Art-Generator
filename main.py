@@ -3,6 +3,7 @@ import streamlit as st
 from itertools import cycle
 import random
 
+st.set_page_config(page_title="Random Art Generator")
 
 def rand_clr():
     red = random.randint(0, 255)
