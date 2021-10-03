@@ -29,11 +29,66 @@ def interpolate(start_color, end_color, factor: float):
     for i in range(3):
         new_color_value = factor * end_color[i] + (1 - factor) * start_color[i]
         new_color_rgb.append(int(new_color_value))
+        print(new_color_value)
 
     return tuple(new_color_rgb)
 
 
-def random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale, start_color, end_color):
+all_effects = ["lighter", "darker", "difference", "multiply", "screen", "soft_light",
+               "hard_light", "overlay", "add", "subtract", "add_modulo", "subtract_modulo", "logical_and"
+               "logical_or", "logical_xor"]
+
+
+def image_effect(back_image, front_line, effect):
+    the_effect = f"ImageChops.{effect}(back_image, front_line)"
+    return eval(the_effect)
+
+
+def horizontal_line_draw(image, image_size_px, num_lines, thickness_scale, start_color, end_color, effect):
+    current_thickness = thickness_scale
+    n_points = num_lines - 1
+    max_distance = image_size_px // 13
+
+    for i in range(num_lines):
+        overlay_image = Image.new("RGB", (image_size_px, image_size_px), (0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay_image)
+
+        top_point = (random.randint(0, image_size_px), 0)
+        bottom_point = (random.randint(top_point[0] - max_distance, top_point[0] + max_distance), image_size_px)
+
+        factor = i / n_points
+        line_color = interpolate(start_color, end_color, factor=factor)
+
+        overlay_draw.line([top_point, bottom_point], fill=line_color, width=current_thickness)
+        current_thickness += thickness_scale
+        image = image_effect(image, overlay_image, effect)
+
+    return image
+
+
+def vertical_line_draw(image, image_size_px, num_lines, thickness_scale, start_color, end_color, effect):
+    current_thickness = thickness_scale
+    n_points = num_lines - 1
+    max_distance = image_size_px // 13
+
+    for i in range(num_lines):
+        overlay_image = Image.new("RGB", (image_size_px, image_size_px), (0, 0, 0))
+        overlay_draw = ImageDraw.Draw(overlay_image)
+
+        left_point = (0, random.randint(0, image_size_px))
+        right_point = (image_size_px, random.randint(left_point[1] - max_distance, left_point[1] + max_distance))
+
+        factor = i / n_points
+        line_color = interpolate(start_color, end_color, factor=factor)
+
+        overlay_draw.line([left_point, right_point], fill=line_color, width=current_thickness)
+        current_thickness += thickness_scale
+        image = image_effect(image, overlay_image, effect)
+
+    return image
+
+
+def random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale, start_color, end_color, effect):
     # How many lines do we want to draw?
     points = []
 
@@ -83,17 +138,30 @@ def random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale,
         current_thickness += thickness_scale
 
         # Add the overlay channel.
-        image = ImageChops.add(image, overlay_image)
+        image = image_effect(image, overlay_image, effect)
 
     return image
 
 
-def generate_art(image_size, bg_color=(0, 0, 0), num_lines=10, horizontal=False, vertical=False, start_color=None, end_color=None, padding_=True):
+def generate_art(image_size, bg_color=(0, 0, 0), num_lines=10, horizontal=False, vertical=False, start_color=None, end_color=None, padding_=True, effect="add"):
     # Set size parameters.
     rescale = 2
     image_size_px = image_size * rescale
-    pad = round(image_size / 10)
-    thickness_scale = round(image_size / 170)
+    pad = image_size // 15
+    effect = effect.lower()
+
+    if num_lines <= 10:
+        thickness_scale = round(image_size / 170)
+    elif 10 < num_lines <= 20:
+        thickness_scale = round(image_size / 220)
+    elif 20 < num_lines <= 30:
+        thickness_scale = round(image_size / 290)
+    elif 30 < num_lines <= 40:
+        thickness_scale = round(image_size / 390)
+    elif 40 < num_lines <= 50:
+        thickness_scale = round(image_size / 500)
+    else:
+        thickness_scale = round(image_size / 650)
 
     if horizontal or vertical:
         padding_ = False
@@ -114,8 +182,11 @@ def generate_art(image_size, bg_color=(0, 0, 0), num_lines=10, horizontal=False,
 
     # get the image
     if horizontal:
-        pass
-    image = random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale, start_color, end_color)
+        image = horizontal_line_draw(image, image_size_px, num_lines, thickness_scale, start_color, end_color, effect)
+    elif vertical:
+        image = vertical_line_draw(image, image_size_px, num_lines, thickness_scale, start_color, end_color, effect)
+    else:
+        image = random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale, start_color, end_color, effect)
 
     # Image is done! Now resize it to be smooth.
     image = image.resize(
