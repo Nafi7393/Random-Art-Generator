@@ -48,8 +48,8 @@ with st.sidebar.form(key="Image Details"):
     st.markdown("---")
 
     st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-    st.write('<p style="font-size: 15px;">If you want a seamless pattern!</p>', unsafe_allow_html=True)
-    pattern = st.checkbox("Give me a Seamless Pattern".upper())
+    st.write('<p style="font-size: 15px;">If you want a seamless pattern!</p>'.upper(), unsafe_allow_html=True)
+    pattern = st.checkbox("Give me a Seamless Pattern")
     st.markdown("---")
 
     effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=3)
