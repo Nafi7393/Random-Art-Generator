@@ -211,7 +211,7 @@ def make_seamless(img, image_size):
 
 
 if __name__ == "__main__":
-    imag = generate_art(image_size=1024, bg_color=(150, 180, 220))
-    make_seamless(imag, 1024)
+    imag = generate_art(image_size=1000, bg_color=(150, 180, 220))
+    make_seamless(imag, 1000)
 
 
