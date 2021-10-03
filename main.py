@@ -1,4 +1,4 @@
-from art_generator import generate_art
+from art_generator import generate_art, make_seamless
 import streamlit as st
 from itertools import cycle
 import random
@@ -47,7 +47,12 @@ with st.sidebar.form(key="Image Details"):
     end_clr = hex_to_rgb(st.color_picker(label="Line End Color"))
     st.markdown("---")
 
-    effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=0)
+    st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
+    st.write('<p style="font-size: 15px;">If you want a seamless pattern!</p>', unsafe_allow_html=True)
+    pattern = st.checkbox("Give me a Seamless Pattern")
+    st.markdown("---")
+
+    effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=3)
 
     submit = st.form_submit_button()
 
@@ -86,6 +91,8 @@ for i in range(total_img):
                              start_color=start_clr,
                              end_color=end_clr,
                              effect=effect_option)
+    if pattern:
+        image = make_seamless(img=image, image_size=img_size)
 
     images.append(image)
     next(cols).image(image, caption=f"{i + 1}")
