@@ -1,4 +1,4 @@
-from PIL import Image, ImageDraw, ImageChops
+from PIL import Image, ImageDraw, ImageChops, ImageOps
 import random
 import colorsys
 
@@ -29,7 +29,6 @@ def interpolate(start_color, end_color, factor: float):
     for i in range(3):
         new_color_value = factor * end_color[i] + (1 - factor) * start_color[i]
         new_color_rgb.append(int(new_color_value))
-        print(new_color_value)
 
     return tuple(new_color_rgb)
 
@@ -197,8 +196,22 @@ def generate_art(image_size, bg_color=(0, 0, 0), num_lines=10, horizontal=False,
     return image
 
 
+def make_seamless(img, image_size):
+    pat_size = image_size * 2
+    image = Image.new("RGB", (pat_size, pat_size), (0, 0, 0))
+    image.paste(img, (0, 0))
+
+    transposed = ImageOps.mirror(img)
+    image.paste(transposed, (image_size, 0))
+
+    image.paste(ImageOps.flip(img), (0, image_size))
+    image.paste(ImageOps.flip(transposed), (image_size, image_size))
+
+    return image
+
+
 if __name__ == "__main__":
-    generate_art(image_size=1024,
-                 bg_color=(150, 180, 220))
+    imag = generate_art(image_size=1024, bg_color=(150, 180, 220))
+    make_seamless(imag, 1024)
 
 
