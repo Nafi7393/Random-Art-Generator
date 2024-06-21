@@ -29,7 +29,7 @@ def generate_art(
     # Set size parameters.
     rescale = 2
     image_size_px = image_size * rescale
-    pad = image_size // 15
+    pad = image_size // 20
     effect = effect.lower()
     thick_addition = -20
 
@@ -46,13 +46,10 @@ def generate_art(
     else:
         thickness_scale = round(image_size / (750 + thick_addition))
 
-    if random_line:
-        padding_ = True
-
-    if padding_:
-        padding = pad * rescale
-    else:
+    if not padding_:
         padding = 0
+    else:
+        padding = padding_
 
     # Create the directory and base image.
     image = Image.new("RGB", (image_size_px, image_size_px), bg_color)
@@ -92,6 +89,17 @@ def generate_art(
             end_color=end_color,
             effect=effect,
         )
+    if random_line:
+        image = image_functions.random_lines_draw(
+            image=image,
+            image_size_px=image_size_px,
+            padding=padding,
+            num_lines=num_lines,
+            thickness_scale=thickness_scale,
+            start_color=start_color,
+            end_color=end_color,
+            effect=effect,
+        )
     if circle:
         image = image_functions.circle_image(
             image=image,
@@ -117,17 +125,6 @@ def generate_art(
             style=style,
             effect=effect,
             stroke_width=15,
-        )
-    if random_line:
-        image = image_functions.random_lines_draw(
-            image=image,
-            image_size_px=image_size_px,
-            padding=padding,
-            num_lines=num_lines,
-            thickness_scale=thickness_scale,
-            start_color=start_color,
-            end_color=end_color,
-            effect=effect,
         )
 
     # Image is done! Now resize it to be smooth.

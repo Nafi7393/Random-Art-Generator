@@ -75,37 +75,52 @@ def image_effect(back_image, front_line, effect):
 def get_circle_cord(center, position, radius, style, max_size):
     """
     Generate circle coordinates based on center, position,
-    radius, style, and max_size. Circles may overflow the image bounds.
+    radius, style, and max_size.
 
     Parameters:
     - center (int): Center coordinate of the circle.
     - position (int): Position offset of the circle.
     - radius (tuple): Tuple (min_radius, max_radius) specifying the minimum
                       and maximum radius of the circle.
-    - style (str): Style of the circle ('Random' or any other value).
+    - style (str): Style of the circle ('Random' or 'Diagonal').
     - max_size (int): Maximum size of the image (image_size_px).
 
     Returns:
     - tuple: Tuple containing coordinates (left_point, right_point) of the circle.
     """
+    circle_radius = random.randint(radius[0], radius[1])
+    diameter = 2 * circle_radius
 
-    # Calculate addition within reasonable limits to ensure circles stay within bounds
-    addition = random.randint(radius[0], radius[1] + 50)
+    if style == "Diagonal":
+        # Check for overflow on all sides with a slight buffer for top
+        overflow_left = center - position - radius[0] < 0
+        overflow_right = center + position + radius[0] > max_size
 
-    # Calculate top and bottom coordinates allowing overflow if necessary
-    top = random.randint(-addition, max_size)
-    bottom = top + addition
-    if bottom > max_size:
-        bottom = max_size
+        # Adjust position and/or radius to avoid overflow
+        if overflow_left and overflow_right:
+            # Circle cannot fit diagonally, adjust position to center
+            position = 0
+        elif overflow_left:
+            # Overflow on the left, adjust position to fit
+            position = min(position, center + radius[0])
+        elif overflow_right:
+            # Overflow on the right, adjust position to fit
+            position = max(position, center - (max_size - radius[0]))
 
-    # Calculate left and right coordinates allowing overflow if necessary
-    left = random.randint(-addition, max_size)
-    right = left + addition
-    if right > max_size:
-        right = max_size
+        # Recalculate y-coordinate based on adjusted position
+        y0 = center - position
+        y1 = y0 + diameter
+        x0 = center - position  # Mirror y movement to x for diagonal line  # Keep this line
+        x1 = x0 + diameter
 
-    return (left, top), (right, bottom)
+        return (x0, y0), (x1, y1)
+    else:
+        x0 = random.randint(-radius[0], max_size)  # Allow negative x0 for overflow
+        y0 = random.randint(-radius[0], max_size)  # Allow negative y0 for overflow
+        x1 = x0 + diameter
+        y1 = y0 + diameter
 
+        return (x0, y0), (x1, y1)
 
 
 def get_rect_cord(center_x, position_y, rect_size, style, max_size):
@@ -126,34 +141,79 @@ def get_rect_cord(center_x, position_y, rect_size, style, max_size):
     """
 
     if style == "Diagonal":
-        # For diagonal style, place rectangles along a diagonal line
+        # Randomly choose addition value within rect_size range
         addition = random.randint(rect_size[0], rect_size[1])
 
-        # Ensure y coordinates stay within image bounds
-        y0 = max(0, min(position_y, max_size - addition))
-        y1 = max(0, min(position_y + addition, max_size))
+        # Calculate potential coordinates for diagonal placement
+        center_adjusted_x = center_x - addition // 2
+        y0 = position_y - addition // 2
+        y1 = position_y + addition // 2
+        x0 = center_adjusted_x
+        x1 = center_adjusted_x + addition
+
+        # Check for overflow on all sides with a slight buffer
+        overflow_left = x0 < 0
+        overflow_right = x1 > max_size
+        overflow_top = y0 < 0
+        overflow_bottom = y1 > max_size
+
+        # Adjust position and/or size to avoid overflow while maintaining diagonality
+        if overflow_left and overflow_top:
+            # Special case: Top-left corner overflows
+            # Adjust position and potentially shrink rectangle diagonally
+            max_allowed_addition = min(center_x, max_size - position_y)
+            adjusted_addition = min(addition, max_allowed_addition * 2)
+            position_y = adjusted_addition // 2
+            center_adjusted_x = max(0, center_x - adjusted_addition // 2)
+            # Recalculate coordinates based on adjusted values
+            y0 = position_y - adjusted_addition // 2
+            y1 = position_y + adjusted_addition // 2
+            x0 = center_adjusted_x
+            x1 = center_adjusted_x + adjusted_addition
+        else:
+            # Handle other overflow cases
+            if overflow_left:
+                # Left side overflows, adjust position and potentially shrink rectangle
+                position_y = min(position_y, addition // 2)
+                center_adjusted_x = max(0, center_x - min(addition // 2, center_x))
+                x0 = center_adjusted_x
+                x1 = min(x1, max_size)  # Clip right side if needed
+            elif overflow_right:
+                # Right side overflows, adjust position and potentially shrink rectangle
+                position_y = max(position_y, max_size - addition // 2)
+                center_adjusted_x = min(max_size - addition // 2, center_x)
+                x0 = max(x0, 0)  # Clip left side if needed
+                x1 = center_adjusted_x + addition
+            elif overflow_top:
+                # Top side overflows, adjust position and potentially shrink rectangle
+                position_y = max(position_y, addition // 2)
+                y0 = max(y0, 0)
+                y1 = min(y1, max_size)  # Clip bottom side if needed
+            elif overflow_bottom:
+                # Bottom side overflows, adjust position and potentially shrink rectangle
+                position_y = min(position_y, max_size - addition // 2)
+                y1 = min(y1, max_size)
+                y0 = max(y0, 0)  # Clip top side if needed
+
+        # Ensure y coordinates are in the correct order (y0 <= y1)
         if y0 > y1:
             y0, y1 = y1, y0
 
-        # Ensure x coordinates stay within image bounds
-        x0 = max(0, min(center_x - addition // 2, max_size - addition))
-        x1 = max(0, min(center_x + addition // 2, max_size))
-        if x0 > x1:
-            x0, x1 = x1, x0
-
-        return (x0, y0), (x1, y1)
+        return (x0-50, y0-50), (x1, y1)
     else:
-        # For random style, place rectangles randomly within and outside the image bounds
+        # For random style, generate random width and height within rect_size
         rect_width = random.randint(rect_size[0], rect_size[1])
         rect_height = random.randint(rect_size[0], rect_size[1])
 
-        # Randomly decide whether to extend outside the image
+        # Determine if rectangle extends outside the image bounds
         extend_outside = random.random() > 0.5
 
         if extend_outside:
+            # Allow negative coordinates for extending outside the image
             x0 = random.randint(-rect_width, max_size)
             y0 = random.randint(-rect_height, max_size)
         else:
+            # Ensure x and y coordinates are within image bounds
             x0 = random.randint(0, max_size - rect_width)
             y0 = random.randint(0, max_size - rect_height)
 
@@ -168,7 +228,7 @@ def image_download(img, file_name):
     border: none;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 60%;
     text-decoration: none;
     background-color: #0D58B1;
     color: #FFFB00;

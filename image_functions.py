@@ -75,36 +75,28 @@ def vertical_line_draw(
     return image
 
 
-def random_lines_draw(
-    image,
-    image_size_px,
-    padding,
-    num_lines,
-    thickness_scale,
-    start_color,
-    end_color,
-    effect,
-):
-
+def random_lines_draw(image, image_size_px, padding, num_lines, thickness_scale, start_color, end_color, effect):
     points = []
 
+    # Generate random points within the padded area
     for _ in range(num_lines):
-        point = (
-            all_functions.random_point(image_size_px, padding),
-            all_functions.random_point(image_size_px, padding),
-        )
+        point = (all_functions.random_point(image_size_px - 2 * padding, padding) + padding,
+                 all_functions.random_point(image_size_px - 2 * padding, padding) + padding)
         points.append(point)
 
+    # Calculate the bounding box of all points
     min_x = min([p[0] for p in points])
     max_x = max([p[0] for p in points])
     min_y = min([p[1] for p in points])
     max_y = max([p[1] for p in points])
 
-    x_offset = (min_x - padding) - (image_size_px - padding - max_x)
-    y_offset = (min_y - padding) - (image_size_px - padding - max_y)
+    # Calculate offsets to center the points in the image
+    x_offset = (image_size_px - max_x - min_x) // 2
+    y_offset = (image_size_px - max_y - min_y) // 2
 
+    # Apply offsets to center the points
     for i, point in enumerate(points):
-        points[i] = (point[0] - x_offset // 2, point[1] - y_offset // 2)
+        points[i] = (point[0] + x_offset, point[1] + y_offset)
 
     current_thickness = thickness_scale
     n_points = len(points) - 1
@@ -125,11 +117,10 @@ def random_lines_draw(
         else:
             overlay_image = Image.new("RGB", (image_size_px, image_size_px), (0, 0, 0))
             overlay_draw = ImageDraw.Draw(overlay_image)
-            overlay_draw.line(
-                [point, next_point], fill=line_color, width=current_thickness
-            )
+            overlay_draw.line([point, next_point], fill=line_color, width=current_thickness)
 
             image = all_functions.image_effect(image, overlay_image, effect)
+
         current_thickness += thickness_scale
 
     return image
@@ -143,9 +134,7 @@ def circle_image(image, image_size_px, num_circle, radius, start_color, end_colo
     for i in range(num_circle):
         circle_center = random.randint(0, image_size_px)
         position = random.randint(0, image_size_px)
-        left_point, right_point = all_functions.get_circle_cord(
-            circle_center, position, radius, style, image_size_px
-        )
+        left_point, right_point = all_functions.get_circle_cord(circle_center, position, radius, style, image_size_px)
 
         factor = i / n_points
         line_color = all_functions.interpolate(start_color, end_color, factor=factor)

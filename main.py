@@ -36,9 +36,11 @@ stoke = False
 stroke_clr = None
 stroke_width = 12
 seamless_bool = False
+padding = False
 
 
 image_type = st.sidebar.selectbox(label="What shapes you want?".upper(), options=["Line", "Circle", "Rectangle"])
+total_img = st.sidebar.slider(label="Total How Many Images", min_value=1, max_value=25, value=2)
 img_size = st.sidebar.slider(label="Image Size", min_value=128, max_value=3450, value=720)
 
 
@@ -71,35 +73,52 @@ with st.sidebar.form(key="Image Details"):
     st.write(" ")
     st.write(" ")
 
-    dots = st.checkbox(label="Add Small DOTs")
-    st.write(" ")
-    num_of_dots = st.slider(label="Number of Total Small Dots", min_value=10, max_value=600, value=150)
-    st.write(" ")
-    dot_clr = all_functions.hex_to_rgb(st.color_picker(label="Set Dot Color", value="#ffffff"))
-
-    st.markdown("---")
-
     total_lines_in_img = st.slider(label=type_str, min_value=min_val, max_value=max_val, value=value)
+    if img_option == "Random Shape":
+        padding = st.slider(label="Padding Value", min_value=-(img_size // 5), max_value=img_size // 5, value=0)
+    else:
+        padding = False
 
     if image_type == "Circle":
-        min_v = (img_size // 27) + 5
-        max_v = (img_size // 3) + 50
-        initial_min_radius = min_v + ((max_v - min_v) // 3)  # Adjust the fraction as needed
-        initial_max_radius = max_v - ((max_v - min_v) // 6)  # Adjust the fraction as needed
-        circle_radius = st.slider(label="Minimum and Maximum Radius", min_value=min_v, max_value=max_v,
+        # Increase base values proportionally to image size
+        min_v_cir = int(img_size * 0.05) + 20  # Adjust for larger base minimum radius
+        max_v_cir = int(img_size * 0.7) + 200  # Adjust for larger base maximum radius
+
+        # Calculate fractions for initial values based on range
+        fraction_min = 1 / 10  # Adjust for more spread towards minimum radius
+        fraction_max = 1 / 2  # Adjust for wider range towards maximum radius
+
+        initial_min_radius = min_v_cir + int((max_v_cir - min_v_cir) * fraction_min)
+        initial_max_radius = max_v_cir - int((max_v_cir - min_v_cir) * fraction_max)
+
+        circle_radius = st.slider(label="Minimum and Maximum Radius", min_value=min_v_cir, max_value=max_v_cir,
                                   value=(initial_min_radius, initial_max_radius))
 
     if image_type == "Rectangle":
-        min_v_rec = (img_size // 7) + 20
-        max_v_rec = (img_size // 2) + 160
-        initial_min_size = min_v_rec + ((max_v_rec - min_v_rec) // 3)  # Adjust the fraction as needed
-        initial_max_size = max_v_rec - ((max_v_rec - min_v_rec) // 6)  # Adjust the fraction as needed
+        # Increase base values proportionally to image size
+        min_v_rec = int(img_size * 0.2) + 50  # Adjust for larger base minimum rectangle size
+        max_v_rec = int(img_size * 0.8) + 300  # Adjust for larger base maximum rectangle size
+
+        # Calculate fractions for initial values based on range
+        fraction_min = 1 / 3  # Adjust for spread towards minimum size
+        fraction_max = 1 / 6  # Adjust for wider range towards maximum size
+
+        initial_min_size = min_v_rec + int((max_v_rec - min_v_rec) * fraction_min)
+        initial_max_size = max_v_rec - int((max_v_rec - min_v_rec) * fraction_max)
+
         rectangle_size = st.slider(label="Minimum and Maximum Size of Rectangle",
                                    min_value=min_v_rec, max_value=max_v_rec,
                                    value=(initial_min_size, initial_max_size))
 
-    total_img = st.slider(label="Total How Many Images", min_value=1, max_value=25, value=2)
     st.markdown("---")
+    st.markdown(" ")
+
+    dots = st.checkbox(label="Add Small DOTs")
+    num_of_dots = st.slider(label="Number of Total Small Dots", min_value=10, max_value=600, value=150)
+    dot_clr = all_functions.hex_to_rgb(st.color_picker(label="Set Dot Color", value="#ffffff"))
+
+    st.markdown("---")
+
     background_clr_choice = st.radio(label="Set Background Color", options=("Random", "Pick One"))
     st.write("<style>div.row-widget.stRadio > div{flex-direction:row;}</style>", unsafe_allow_html=True)
     background_clr = st.color_picker(label="Only if you choose 'Pick One' from above")
@@ -142,7 +161,59 @@ with st.sidebar.form(key="Image Details"):
 
     effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=6)
 
-    submit = st.form_submit_button()
+    submit = st.form_submit_button(label="SUBMIT")
+    st.markdown(" ")
+    st.markdown(" ")
+    st.markdown(" ")
+    st.markdown(" ")
+    st.markdown("""
+        <style>
+        .css-629wbf {
+            background: linear-gradient(135deg, #6d5dfc, #c3c3fc);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+            cursor: pointer;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            width: 100%;
+        }
+        
+        .css-629wbf:hover {
+            background: linear-gradient(135deg, #42a5f5, #478ed1);
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+            transform: translateY(-3px);
+            border-color: #42a5f5 !important;
+            color: white !important;
+        }
+        
+        .css-629wbf:active {
+            opacity: 0.4;
+            background: linear-gradient(135deg, #5d59f9, #b2b2fc) !important;
+            color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
+            transform: translateY(10px) !important;
+            border-color: #6d5dfc !important;
+        }
+        
+        .css-629wbf:focus {
+            background: linear-gradient(135deg, #6d5dfc, #c3c3fc) !important;
+            color: #ffffff !important;
+            border-color: none !important;
+            outline: none !important;
+              &:focus {
+                outline: none;
+              }
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
 
 circle = False
@@ -190,47 +261,17 @@ for i in range(total_img):
         effect_option = random.choice(all_effects[:-1])
 
     if clr_choice != "Pick One":
-        image = generate_art(
-            image_size=img_size,
-            bg_color=bg_clr,
-            num_lines=total_lines_in_img,
-            horizontal=horizontal,
-            vertical=vertical,
-            random_line=random_line,
-            circle=circle,
-            rect=rectangle,
-            stroke_clr=stroke_clr,
-            cir_radius=circle_radius,
-            rectangle_size=rectangle_size,
-            stroke_width=stroke_width,
-            style=design_style,
-            small_dots=dots,
-            num_of_dots=num_of_dots,
-            dot_clr=dot_clr,
-            effect=effect_option,
-        )
+        image = generate_art(image_size=img_size, bg_color=bg_clr, num_lines=total_lines_in_img, horizontal=horizontal,
+                             vertical=vertical, random_line=random_line, circle=circle, rect=rectangle,
+                             stroke_clr=stroke_clr, cir_radius=circle_radius, rectangle_size=rectangle_size,
+                             stroke_width=stroke_width, style=design_style, small_dots=dots, num_of_dots=num_of_dots,
+                             dot_clr=dot_clr, effect=effect_option, padding_=padding)
     else:
-        image = generate_art(
-            image_size=img_size,
-            bg_color=bg_clr,
-            num_lines=total_lines_in_img,
-            horizontal=horizontal,
-            vertical=vertical,
-            circle=circle,
-            rect=rectangle,
-            random_line=random_line,
-            start_color=start_clr,
-            end_color=end_clr,
-            stroke_clr=stroke_clr,
-            cir_radius=circle_radius,
-            rectangle_size=rectangle_size,
-            stroke_width=stroke_width,
-            style=design_style,
-            small_dots=dots,
-            num_of_dots=num_of_dots,
-            dot_clr=dot_clr,
-            effect=effect_option,
-        )
+        image = generate_art(image_size=img_size, bg_color=bg_clr, num_lines=total_lines_in_img, horizontal=horizontal,
+                             vertical=vertical, circle=circle, rect=rectangle, random_line=random_line, padding_=padding,
+                             start_color=start_clr, end_color=end_clr, stroke_clr=stroke_clr, cir_radius=circle_radius,
+                             rectangle_size=rectangle_size, stroke_width=stroke_width, style=design_style,
+                             small_dots=dots, num_of_dots=num_of_dots, dot_clr=dot_clr, effect=effect_option)
     if pattern:
         image = image_functions.make_seamless(img=image, image_size=img_size)
 
