@@ -135,19 +135,8 @@ def random_lines_draw(
     return image
 
 
-def circle_image(
-    image,
-    image_size_px,
-    num_circle,
-    radius,
-    start_color,
-    end_color,
-    stroke_color,
-    effect,
-    style,
-    stroke_width=15,
-):
-
+def circle_image(image, image_size_px, num_circle, radius, start_color, end_color,
+                 stroke_color, effect, style, stroke_width=15):
     n_points = num_circle - 1
     drawing = ImageDraw.Draw(image)
 
@@ -155,7 +144,7 @@ def circle_image(
         circle_center = random.randint(0, image_size_px)
         position = random.randint(0, image_size_px)
         left_point, right_point = all_functions.get_circle_cord(
-            circle_center, position, radius, style
+            circle_center, position, radius, style, image_size_px
         )
 
         factor = i / n_points
@@ -182,48 +171,38 @@ def circle_image(
     return image
 
 
-def rect_image(
-    image,
-    image_size_px,
-    num_rect,
-    start_color,
-    end_color,
-    stroke_color,
-    rect_size,
-    style,
-    effect,
-    stroke_width=15,
-):
+def rect_image(image, image_size_px, num_rect, start_color, end_color, stroke_color,
+               rect_size, style, effect, stroke_width=15):
 
     n_points = num_rect - 1
     drawing = ImageDraw.Draw(image)
 
+    # Calculate spacing between rectangles to evenly distribute them
+    step_x = image_size_px // (num_rect + 1)
+    step_y = image_size_px // (num_rect + 1)
+
     for i in range(num_rect):
-        circle_center = random.randint(0, image_size_px)
-        position = random.randint(0, image_size_px)
+        # Calculate center of each rectangle
+        circle_center = step_x * (i + 1)
+        position = step_y * (i + 1)
+
+        # Generate rectangle coordinates
         left_point, right_point = all_functions.get_rect_cord(
-            circle_center, position, rect_size, style
+            circle_center, position, rect_size, style, image_size_px
         )
 
+        # Interpolate color based on position in sequence
         factor = i / n_points
         line_color = all_functions.interpolate(start_color, end_color, factor=factor)
 
+        # Draw the rectangle
+        points = (left_point, right_point)
         if effect == "normal":
-            drawing.rectangle(
-                [left_point, right_point],
-                fill=line_color,
-                outline=stroke_color,
-                width=stroke_width,
-            )
+            drawing.rectangle(points, fill=line_color, outline=stroke_color, width=stroke_width)
         else:
             overlay_image = Image.new("RGB", (image_size_px, image_size_px), (0, 0, 0))
             overlay_draw = ImageDraw.Draw(overlay_image)
-            overlay_draw.rectangle(
-                [left_point, right_point],
-                fill=line_color,
-                outline=stroke_color,
-                width=stroke_width,
-            )
+            overlay_draw.rectangle(points, fill=line_color, outline=stroke_color, width=stroke_width)
             image = all_functions.image_effect(image, overlay_image, effect)
 
     return image

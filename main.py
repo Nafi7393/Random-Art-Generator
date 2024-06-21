@@ -1,3 +1,5 @@
+import random
+
 from art_generator import generate_art
 import image_functions
 import streamlit as st
@@ -23,14 +25,8 @@ st.markdown(" ")
 st.markdown(" ")
 
 
-all_effects = [
-    "normal".upper(),
-    "lighter".upper(),
-    "difference".upper(),
-    "screen".upper(),
-    "add".upper(),
-    "subtract".upper(),
-]
+all_effects = ["normal".upper(), "lighter".upper(), "difference".upper(),
+               "screen".upper(), "add".upper(), "subtract".upper(), "random".upper()]
 option = ["Horizontal", "Vertical", "Horizontal & Vertical", "Random Shape"]
 circle_radius = (25, 200)
 rectangle_size = 25
@@ -42,19 +38,13 @@ stroke_width = 12
 seamless_bool = False
 
 
-image_type = st.sidebar.selectbox(
-    label="What shapes you want?".upper(), options=["Line", "Circle", "Rectangle"]
-)
-img_size = st.sidebar.slider(
-    label="Image Size", min_value=128, max_value=3450, value=720
-)
+image_type = st.sidebar.selectbox(label="What shapes you want?".upper(), options=["Line", "Circle", "Rectangle"])
+img_size = st.sidebar.slider(label="Image Size", min_value=128, max_value=3450, value=720)
 
 
 with st.sidebar.form(key="Image Details"):
     if image_type == "Line":
-        img_option = st.selectbox(
-            label="What type of image you want?".upper(), options=option
-        )
+        img_option = st.selectbox(label="What type of image you want?".upper(), options=option)
         type_str = "Total Number of Lines"
         min_val = 5
         max_val = 50
@@ -64,82 +54,59 @@ with st.sidebar.form(key="Image Details"):
         img_option = "Circle"
         type_str = "Total Number of Circles"
         min_val = 5
-        max_val = 100
-        value = 20
+        max_val = 200
+        value = 50
 
     elif image_type == "Rectangle":
         img_option = "Rectangle"
         type_str = "Total Number of Rectangles"
         min_val = 5
-        max_val = 80
-        value = 15
+        max_val = 200
+        value = 50
 
     if image_type in ["Circle", "Rectangle"]:
-        design_style = st.selectbox(
-            label="What Design Style you want?".upper(), options=["Diagonal", "Random"]
-        )
-        seamless_bool = True
+        design_style = st.selectbox(label="What Design Style you want?".upper(), options=["Diagonal", "Random"])
+        seamless_bool = False
 
     st.write(" ")
     st.write(" ")
+
     dots = st.checkbox(label="Add Small DOTs")
     st.write(" ")
-    num_of_dots = st.slider(
-        label="Number of Total Small Dots", min_value=10, max_value=500, value=100
-    )
+    num_of_dots = st.slider(label="Number of Total Small Dots", min_value=10, max_value=600, value=150)
     st.write(" ")
-    dot_clr = all_functions.hex_to_rgb(
-        st.color_picker(label="Set Dot Color", value="#ffffff")
-    )
+    dot_clr = all_functions.hex_to_rgb(st.color_picker(label="Set Dot Color", value="#ffffff"))
+
     st.markdown("---")
 
-    total_lines_in_img = st.slider(
-        label=type_str, min_value=min_val, max_value=max_val, value=value
-    )
+    total_lines_in_img = st.slider(label=type_str, min_value=min_val, max_value=max_val, value=value)
+
     if image_type == "Circle":
         min_v = (img_size // 27) + 5
         max_v = (img_size // 3) + 50
-        circle_radius = st.slider(
-            label="Minimum and Maximum Radius",
-            min_value=min_v,
-            max_value=max_v,
-            value=(min_v, round((((max_v - 70) - min_v) / (max_v - 70)) * 100) - 70),
-        )
+        initial_min_radius = min_v + ((max_v - min_v) // 3)  # Adjust the fraction as needed
+        initial_max_radius = max_v - ((max_v - min_v) // 6)  # Adjust the fraction as needed
+        circle_radius = st.slider(label="Minimum and Maximum Radius", min_value=min_v, max_value=max_v,
+                                  value=(initial_min_radius, initial_max_radius))
 
     if image_type == "Rectangle":
-        min_v_rec = (img_size // 7) + 10
-        max_v_rec = (img_size // 2) + 80
-        rectangle_size = st.slider(
-            label="Minimum and Maximum Size of Rectangle",
-            min_value=min_v_rec,
-            max_value=max_v_rec,
-            value=(
-                min_v_rec,
-                round((((max_v_rec - 80) - min_v_rec) / (max_v_rec - 80)) * 100) - 50,
-            ),
-        )
+        min_v_rec = (img_size // 7) + 20
+        max_v_rec = (img_size // 2) + 160
+        initial_min_size = min_v_rec + ((max_v_rec - min_v_rec) // 3)  # Adjust the fraction as needed
+        initial_max_size = max_v_rec - ((max_v_rec - min_v_rec) // 6)  # Adjust the fraction as needed
+        rectangle_size = st.slider(label="Minimum and Maximum Size of Rectangle",
+                                   min_value=min_v_rec, max_value=max_v_rec,
+                                   value=(initial_min_size, initial_max_size))
 
-    total_img = st.slider(
-        label="Total How Many Images", min_value=1, max_value=25, value=1
-    )
+    total_img = st.slider(label="Total How Many Images", min_value=1, max_value=25, value=2)
     st.markdown("---")
-
-    background_clr_choice = st.radio(
-        label="Set Background Color", options=("Random", "Pick One")
-    )
-    st.write(
-        "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
-        unsafe_allow_html=True,
-    )
+    background_clr_choice = st.radio(label="Set Background Color", options=("Random", "Pick One"))
+    st.write("<style>div.row-widget.stRadio > div{flex-direction:row;}</style>", unsafe_allow_html=True)
     background_clr = st.color_picker(label="Only if you choose 'Pick One' from above")
     st.markdown("---")
-
     clr_choice = st.radio(label="Set Fill Color", options=("Random", "Pick One"))
     st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-    st.write(
-        '<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>',
-        unsafe_allow_html=True,
-    )
+    st.write('<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>', unsafe_allow_html=True)
 
     clr1, clr2 = st.columns(2)
     with clr1:
@@ -150,49 +117,30 @@ with st.sidebar.form(key="Image Details"):
 
     if image_type == "Circle":
         stoke = st.checkbox("Give Circle a Stroke")
-        stroke_clr_option = st.radio(
-            label="Set Stroke Color (Only if you Check the above Box)",
-            options=("Random", "Pick One"),
-        )
+        stroke_clr_option = st.radio( label="Set Stroke Color (Only if you Check the above Box)",
+                                      options=("Random", "Pick One"))
         st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-        st.write(
-            '<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>',
-            unsafe_allow_html=True,
-        )
+        st.write('<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>', unsafe_allow_html=True)
         stroke_clr = all_functions.hex_to_rgb(st.color_picker(label="Stroke Color"))
-        stroke_width = st.slider(
-            label="Set The Stroke Width", min_value=1, max_value=100, value=12
-        )
+        stroke_width = st.slider(label="Set The Stroke Width", min_value=1, max_value=100, value=12)
         st.markdown("---")
 
     if image_type == "Rectangle":
         stoke = st.checkbox("Give Rectangle a Stroke")
-        stroke_clr_option = st.radio(
-            label="Set Stroke Color (Only if you Check the above Box)",
-            options=("Random", "Pick One"),
-        )
+        stroke_clr_option = st.radio(label="Set Stroke Color (Only if you Check the above Box)",
+                                     options=("Random", "Pick One"))
         st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-        st.write(
-            '<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>',
-            unsafe_allow_html=True,
-        )
+        st.write('<p style="font-size: 14px;">Only if you choose "Pick One" from above</p>',unsafe_allow_html=True)
         stroke_clr = all_functions.hex_to_rgb(st.color_picker(label="Stroke Color"))
-        stroke_width = st.slider(
-            label="Set The Stroke Width", min_value=1, max_value=100, value=12
-        )
+        stroke_width = st.slider(label="Set The Stroke Width", min_value=1, max_value=100, value=12)
         st.markdown("---")
 
     st.write('<p style="font-size: 13.5px;"> </p>', unsafe_allow_html=True)
-    st.write(
-        '<p style="font-size: 15px;">If you want a seamless pattern!</p>'.upper(),
-        unsafe_allow_html=True,
-    )
+    st.write('<p style="font-size: 15px;">If you want a seamless pattern!</p>'.upper(), unsafe_allow_html=True)
     pattern = st.checkbox("Seamless Pattern", value=seamless_bool)
     st.markdown("---")
 
-    effect_option = st.selectbox(
-        label="What type of image you want?", options=all_effects, index=4
-    )
+    effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=6)
 
     submit = st.form_submit_button()
 
@@ -225,7 +173,9 @@ images = []
 size = 7
 cols = cycle(st.columns([size, 1, size]))
 
-
+effect_random = False
+if effect_option == "RANDOM":
+    effect_random = True
 for i in range(total_img):
     if background_clr_choice == "Random":
         bg_clr = all_functions.rand_clr()
@@ -235,6 +185,9 @@ for i in range(total_img):
     if stoke:
         if stroke_clr_option == "Random":
             stroke_clr = all_functions.rand_clr()
+
+    if effect_random:
+        effect_option = random.choice(all_effects[:-1])
 
     if clr_choice != "Pick One":
         image = generate_art(
@@ -287,7 +240,7 @@ for i in range(total_img):
     this_col = next(cols)
     if i % 2 != 0:
         this_col = next(cols)
-    this_col.image(image, caption=f"{img_option} {i + 1}")
+    this_col.image(image, caption=f"{img_option} {i + 1} --- Effect: {effect_option}")
     this_col.write(download_link, unsafe_allow_html=True)
     this_col.write(" ")
     this_col.write(" ")
