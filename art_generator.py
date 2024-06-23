@@ -135,7 +135,7 @@ def generate_art(
 
     # Image is done! Now resize it to be smooth.
     image = image.resize(
-        (image_size_px // rescale, image_size_px // rescale), resample=Image.ANTIALIAS
+        (image_size_px // rescale, image_size_px // rescale), resample=Image.LANCZOS
     )
 
     return image
