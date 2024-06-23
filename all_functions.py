@@ -2,7 +2,7 @@ import base64
 import random
 import colorsys
 from io import BytesIO
-from PIL import ImageChops
+from PIL import ImageChops, Image
 
 
 def rand_clr():
@@ -72,24 +72,22 @@ def image_effect(back_image, front_line, effect):
     return eval(the_effect)
 
 
+def mirror_image(image):
+    width, height = image.size
+    mirrored_image = Image.new('RGB', (width, height))
+    mirrored_image.paste(image.transpose(Image.FLIP_LEFT_RIGHT))
+
+    return mirrored_image
+
+
 def get_circle_cord(center, position, radius, style, max_size):
-    """
-    Generate circle coordinates based on center, position,
-    radius, style, and max_size.
-
-    Parameters:
-    - center (int): Center coordinate of the circle.
-    - position (int): Position offset of the circle.
-    - radius (tuple): Tuple (min_radius, max_radius) specifying the minimum
-                      and maximum radius of the circle.
-    - style (str): Style of the circle ('Random' or 'Diagonal').
-    - max_size (int): Maximum size of the image (image_size_px).
-
-    Returns:
-    - tuple: Tuple containing coordinates (left_point, right_point) of the circle.
-    """
     circle_radius = random.randint(radius[0], radius[1])
     diameter = 2 * circle_radius
+
+    x0 = 0
+    x1 = 0
+    y0 = 0
+    y1 = 0
 
     if style == "Diagonal":
         # Check for overflow on all sides with a slight buffer for top
@@ -102,25 +100,29 @@ def get_circle_cord(center, position, radius, style, max_size):
             position = 0
         elif overflow_left:
             # Overflow on the left, adjust position to fit
-            position = min(position, center + radius[0])
+            position = max(position, center + radius[0])
         elif overflow_right:
             # Overflow on the right, adjust position to fit
-            position = max(position, center - (max_size - radius[0]))
+            position = min(position, center - (max_size - radius[0]))
 
         # Recalculate y-coordinate based on adjusted position
         y0 = center - position
-        y1 = y0 + diameter
-        x0 = center - position  # Mirror y movement to x for diagonal line  # Keep this line
-        x1 = x0 + diameter
+        y1 = y0 + diameter + position
+        x0 = center - position
+        x1 = x0 + diameter + position
 
-        return (x0, y0), (x1, y1)
     else:
         x0 = random.randint(-radius[0], max_size)  # Allow negative x0 for overflow
         y0 = random.randint(-radius[0], max_size)  # Allow negative y0 for overflow
         x1 = x0 + diameter
         y1 = y0 + diameter
 
-        return (x0, y0), (x1, y1)
+    if x0 > x1:
+        x0, x1 = x1, x0
+    if y0 > y1:
+        y0, y1 = y1, y0
+
+    return (x0, y0), (x1, y1)
 
 
 def get_rect_cord(center_x, position_y, rect_size, style, max_size):

@@ -25,8 +25,9 @@ st.markdown(" ")
 st.markdown(" ")
 
 
-all_effects = ["normal".upper(), "lighter".upper(), "difference".upper(),
-               "screen".upper(), "add".upper(), "subtract".upper(), "random".upper()]
+all_effects = ["NORMAL", "LIGHTER", "DIFFERENCE", "SCREEN", "ADD", "SUBTRACT",
+               "ADD_MODULO", "SUBTRACT_MODULO", "random".upper()]
+
 option = ["Horizontal", "Vertical", "Horizontal & Vertical", "Random Shape"]
 circle_radius = (25, 200)
 rectangle_size = 25
@@ -159,7 +160,7 @@ with st.sidebar.form(key="Image Details"):
     pattern = st.checkbox("Seamless Pattern", value=seamless_bool)
     st.markdown("---")
 
-    effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=6)
+    effect_option = st.selectbox(label="What type of image you want?", options=all_effects, index=8)
 
     submit = st.form_submit_button(label="SUBMIT")
     st.markdown(" ")

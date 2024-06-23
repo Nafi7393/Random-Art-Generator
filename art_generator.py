@@ -1,3 +1,5 @@
+import random
+
 from PIL import Image
 import all_functions
 import image_functions
@@ -127,10 +129,14 @@ def generate_art(
             stroke_width=15,
         )
 
+    mirror = random.choice([True, False])
+    if mirror:
+        image = all_functions.mirror_image(image)
+
     # Image is done! Now resize it to be smooth.
     image = image.resize(
         (image_size_px // rescale, image_size_px // rescale), resample=Image.ANTIALIAS
     )
 
-    # Return the image.
     return image
+
