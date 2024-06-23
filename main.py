@@ -169,7 +169,7 @@ with st.sidebar.form(key="Image Details"):
     st.markdown(" ")
     st.markdown("""
         <style>
-        .st-emotion-cache-187vdiz {
+        .submit-button {
             background: linear-gradient(135deg, #6d5dfc, #c3c3fc);
             border: none;
             border-radius: 25px;
@@ -187,7 +187,7 @@ with st.sidebar.form(key="Image Details"):
             width: 100%;
         }
         
-        .st-emotion-cache-187vdiz:hover {
+        .submit-button:hover {
             background: linear-gradient(135deg, #42a5f5, #478ed1);
             box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
             transform: translateY(-3px);
@@ -195,7 +195,7 @@ with st.sidebar.form(key="Image Details"):
             color: white !important;
         }
         
-        .st-emotion-cache-187vdiz:active {
+        .submit-button:active {
             opacity: 0.4;
             background: linear-gradient(135deg, #5d59f9, #b2b2fc) !important;
             color: white !important;
@@ -204,7 +204,7 @@ with st.sidebar.form(key="Image Details"):
             border-color: #6d5dfc !important;
         }
         
-        .st-emotion-cache-187vdiz:focus {
+        .submit-button:focus {
             background: linear-gradient(135deg, #6d5dfc, #c3c3fc) !important;
             color: #ffffff !important;
             border-color: none !important;
