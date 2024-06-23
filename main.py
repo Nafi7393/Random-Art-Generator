@@ -169,7 +169,7 @@ with st.sidebar.form(key="Image Details"):
     st.markdown(" ")
     st.markdown("""
         <style>
-        .css-629wbf {
+        .st-emotion-cache-187vdiz {
             background: linear-gradient(135deg, #6d5dfc, #c3c3fc);
             border: none;
             border-radius: 25px;
@@ -187,7 +187,7 @@ with st.sidebar.form(key="Image Details"):
             width: 100%;
         }
         
-        .css-629wbf:hover {
+        .st-emotion-cache-187vdiz:hover {
             background: linear-gradient(135deg, #42a5f5, #478ed1);
             box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
             transform: translateY(-3px);
@@ -195,7 +195,7 @@ with st.sidebar.form(key="Image Details"):
             color: white !important;
         }
         
-        .css-629wbf:active {
+        .st-emotion-cache-187vdiz:active {
             opacity: 0.4;
             background: linear-gradient(135deg, #5d59f9, #b2b2fc) !important;
             color: white !important;
@@ -204,7 +204,7 @@ with st.sidebar.form(key="Image Details"):
             border-color: #6d5dfc !important;
         }
         
-        .css-629wbf:focus {
+        .st-emotion-cache-187vdiz:focus {
             background: linear-gradient(135deg, #6d5dfc, #c3c3fc) !important;
             color: #ffffff !important;
             border-color: none !important;
