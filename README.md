@@ -117,19 +117,19 @@ python art_generator.py
 
 |                                Circle-Diagonal-Seamless-PREVIEW                                |                               Circle-Random-Seamless-PREVIEW                               |
 |:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
-| ![Circle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/circle-diagonal-seamless-PREVIEW.jpg) | ![Circle-Random-Seamless-PREVIEW](DEMO/pattern-preview/circle-random-seamless-PREVIEW.jpg) |
+| ![Circle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/circle-diagonal-seamless-PREVIEW.png) | ![Circle-Random-Seamless-PREVIEW](DEMO/pattern-preview/circle-random-seamless-PREVIEW.png) |
 
 |                                      Horizontal & Vertical Lines - Seamless-PREVIEW                                       |                                Horizontal Lines - Seamless-PREVIEW                                |
 |:-------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|
-| ![Horizontal & Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal_and_vertical-seamless-PREVIEW.jpg) | ![Horizontal Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal-seamless-PREVIEW.jpg) |
+| ![Horizontal & Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal_and_vertical-seamless-PREVIEW.png) | ![Horizontal Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal-seamless-PREVIEW.png) |
 
-|                              Random Lines - Seamless-PREVIEW                              |                               Vertical Lines - Seamless-PREVIEW                               |
-|:-----------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------:|
-| ![Random Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-random-seamless-PREVIEW.jpg) | ![Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-vertical-seamless-PREVIEW.jpg) |
+|                             Random Lines - Seamless-PREVIEW                             |                               Vertical Lines - Seamless-PREVIEW                               |
+|:---------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------:|
+| ![Random Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-random-seamless-PREVIEW.png) | ![Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-vertical-seamless-PREVIEW.png) |
 
 |                                Rectangle-Random-Seamless-PREVIEW                                 |                                 Rectangle-Diagonal-Seamless-PREVIEW                                  |
 |:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-| ![Rectangle-Random-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-random-seamless-PREVIEW.jpg) | ![Rectangle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-diagonal-seamless-PREVIEW.jpg) |
+| ![Rectangle-Random-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-random-seamless-PREVIEW.png) | ![Rectangle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-diagonal-seamless-PREVIEW.png) |
 
 ## Contributing
 
