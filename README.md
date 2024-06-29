@@ -75,61 +75,80 @@ python art_generator.py
 
 ## Image Previews
 
-### Circle Patterns
-
-|              Circle-Diagonal                 |                    Circle-Diagonal-Seamless                    |
-|:--------------------------------------------:|:--------------------------------------------------------------:|
-| ![Circle-Diagonal](DEMO/circle-diagonal.jpg) | ![Circle-Diagonal-Seamless](DEMO/circle-diagonal-seamless.jpg) |
-
-|              Circle-Random               |                   Circle-Random-Seamless                   |
-|:----------------------------------------:|:----------------------------------------------------------:|
-| ![Circle-Random](DEMO/circle-random.jpg) | ![Circle-Random-Seamless](DEMO/circle-random-seamless.jpg) |
-
 ### Line Patterns
-
-|                     Horizontal & Vertical Lines                       |                          Horizontal & Vertical Lines - Seamless                           |
-|:---------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|
-| ![Horizontal & Vertical Lines](DEMO/line-horizontal_and_vertical.jpg) | ![Horizontal & Vertical Lines - Seamless](DEMO/line-horizontal_and_vertical-seamless.jpg) |
 
 |               Horizontal Lines                |                    Horizontal Lines - Seamless                    |
 |:---------------------------------------------:|:-----------------------------------------------------------------:|
 | ![Horizontal Lines](DEMO/line-horizontal.jpg) | ![Horizontal Lines - Seamless](DEMO/line-horizontal-seamless.jpg) |
 
-|             Random Lines              |                  Random Lines - Seamless                  |
-|:-------------------------------------:|:---------------------------------------------------------:|
-| ![Random Lines](DEMO/line-random.jpg) | ![Random Lines - Seamless](DEMO/line-random-seamless.jpg) |
-
 |              Vertical Lines               |                   Vertical Lines - Seamless                   |
 |:-----------------------------------------:|:-------------------------------------------------------------:|
 | ![Vertical Lines](DEMO/line-vertical.jpg) | ![Vertical Lines - Seamless](DEMO/line-vertical-seamless.jpg) |
 
+|                      Horizontal & Vertical Lines                      |                          Horizontal & Vertical Lines - Seamless                           |
+|:---------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------:|
+| ![Horizontal & Vertical Lines](DEMO/line-horizontal_and_vertical.jpg) | ![Horizontal & Vertical Lines - Seamless](DEMO/line-horizontal_and_vertical-seamless.jpg) |
+
+|             Random Lines              |                  Random Lines - Seamless                  |
+|:-------------------------------------:|:---------------------------------------------------------:|
+| ![Random Lines](DEMO/line-random.jpg) | ![Random Lines - Seamless](DEMO/line-random-seamless.jpg) |
+
+
+
+### Circle Patterns
+
+|               Circle Diagonal                |                   Circle Diagonal - Seamless                   |
+|:--------------------------------------------:|:--------------------------------------------------------------:|
+| ![Circle-Diagonal](DEMO/circle-diagonal.jpg) | ![Circle-Diagonal-Seamless](DEMO/circle-diagonal-seamless.jpg) |
+
+|              Circle Random               |                  Circle Random - Seamless                  |
+|:----------------------------------------:|:----------------------------------------------------------:|
+| ![Circle-Random](DEMO/circle-random.jpg) | ![Circle-Random-Seamless](DEMO/circle-random-seamless.jpg) |
+
 ### Rectangle Patterns
 
-|                Rectangle-Diagonal                  |                     Rectangle-Diagonal-Seamless                      |
+|                 Rectangle Diagonal                 |                    Rectangle Diagonal - Seamless                     |
 |:--------------------------------------------------:|:--------------------------------------------------------------------:|
 | ![Rectangle-Diagonal](DEMO/rectangle-diagonal.jpg) | ![Rectangle-Diagonal-Seamless](DEMO/rectangle-diagonal-seamless.jpg) |
 
-|               Rectangle-Random                 |                    Rectangle-Random-Seamless                     |
+|                Rectangle Random                |                   Rectangle Random - Seamless                    |
 |:----------------------------------------------:|:----------------------------------------------------------------:|
 | ![Rectangle-Random](DEMO/rectangle-random.jpg) | ![Rectangle-Random-Seamless](DEMO/rectangle-random-seamless.jpg) |
 
 ### Seamless Pattern Previews
 
-|                                Circle-Diagonal-Seamless-PREVIEW                                |                               Circle-Random-Seamless-PREVIEW                               |
-|:----------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------:|
-| ![Circle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/circle-diagonal-seamless-PREVIEW.png) | ![Circle-Random-Seamless-PREVIEW](DEMO/pattern-preview/circle-random-seamless-PREVIEW.png) |
+|                              Circle Diagonal Seamless -- PREVIEW                               |
+|:----------------------------------------------------------------------------------------------:|
+| ![Circle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/circle-diagonal-seamless-PREVIEW.png) |
 
-|                                      Horizontal & Vertical Lines - Seamless-PREVIEW                                       |                                Horizontal Lines - Seamless-PREVIEW                                |
-|:-------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------:|
-| ![Horizontal & Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal_and_vertical-seamless-PREVIEW.png) | ![Horizontal Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal-seamless-PREVIEW.png) |
+|                             Circle Random Seamless -- PREVIEW                              |
+|:------------------------------------------------------------------------------------------:|
+| ![Circle-Random-Seamless-PREVIEW](DEMO/pattern-preview/circle-random-seamless-PREVIEW.png) |
 
-|                             Random Lines - Seamless-PREVIEW                             |                               Vertical Lines - Seamless-PREVIEW                               |
-|:---------------------------------------------------------------------------------------:|:---------------------------------------------------------------------------------------------:|
-| ![Random Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-random-seamless-PREVIEW.png) | ![Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-vertical-seamless-PREVIEW.png) |
+|                                      Horizontal & Vertical Lines - Seamless-PREVIEW                                       |
+|:-------------------------------------------------------------------------------------------------------------------------:|
+| ![Horizontal & Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal_and_vertical-seamless-PREVIEW.png) |
 
-|                                Rectangle-Random-Seamless-PREVIEW                                 |                                 Rectangle-Diagonal-Seamless-PREVIEW                                  |
-|:------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
-| ![Rectangle-Random-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-random-seamless-PREVIEW.png) | ![Rectangle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-diagonal-seamless-PREVIEW.png) |
+|                                Horizontal Lines - Seamless-PREVIEW                                |
+|:-------------------------------------------------------------------------------------------------:|
+| ![Horizontal Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-horizontal-seamless-PREVIEW.png) |
+
+|                             Random Lines Seamless -- PREVIEW                              |
+|:-----------------------------------------------------------------------------------------:|
+| ![Random Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-random-seamless-PREVIEW.png) |
+
+|                               Vertical Line Seamless -- PREVIEW                               |
+|:---------------------------------------------------------------------------------------------:|
+| ![Vertical Lines - Seamless-PREVIEW](DEMO/pattern-preview/line-vertical-seamless-PREVIEW.png) |
+
+|                               Rectangle Random Seamless -- PREVIEW                               |
+|:------------------------------------------------------------------------------------------------:|
+| ![Rectangle-Random-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-random-seamless-PREVIEW.png) |
+
+|                                Rectangle Diagonal Seamless -- PREVIEW                                |
+|:----------------------------------------------------------------------------------------------------:|
+| ![Rectangle-Diagonal-Seamless-PREVIEW](DEMO/pattern-preview/rectangle-diagonal-seamless-PREVIEW.png) |
+
 
 ## Contributing
 
