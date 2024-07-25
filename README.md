@@ -153,3 +153,8 @@ python art_generator.py
 ## Contributing
 
 Contributions are welcome! Feel free to open issues and pull requests for bug fixes, enhancements, or new features.
+
+## Others
+If you find this project helpful, please consider giving it a star
+
+[![Star History Chart](https://api.star-history.com/svg?repos=litter-coder/midjourney-proxy-plus&type=Date)](https://star-history.com/#litter-coder/midjourney-proxy-plus&Date)
