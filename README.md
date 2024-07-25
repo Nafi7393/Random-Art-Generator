@@ -157,4 +157,4 @@ Contributions are welcome! Feel free to open issues and pull requests for bug fi
 ## Others
 If you find this project helpful, please consider giving it a star
 
-[![Star History Chart](https://api.star-history.com/svg?repos=litter-coder/midjourney-proxy-plus&type=Date)](https://star-history.com/#litter-coder/midjourney-proxy-plus&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=Nafi7393/Random-Art-Generator&type=Date)](https://star-history.com/#Nafi7393/Random-Art-Generator&Date)
